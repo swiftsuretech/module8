@@ -21,3 +21,4 @@ ngc-cli/libcom_err.so.2
 __pycache__/
 materials/data/
 *.pt
+docker_example/
