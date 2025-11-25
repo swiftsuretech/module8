@@ -35,8 +35,8 @@ class Net(nn.Module):
         return output
     
 def test_image(model, image_path):
-    # Load the trained model
-    model.load_state_dict(torch.load("mnist_cnn.pt"))
+    # Load the trained model (use map_location to handle CPU/GPU compatibility)
+    model.load_state_dict(torch.load("mnist_cnn.pt", map_location=device))
     
     # Open the image and convert it to grayscale
     image = Image.open(image_path).convert('L')
