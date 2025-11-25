@@ -5,40 +5,86 @@ Timer - GPU vs CPU performance comparison helper
 import re
 
 def summary():
-    """Display a summary of GPU vs CPU inference times."""
-    print("=" * 50)
-    print("GPU vs CPU Performance Summary")
-    print("=" * 50)
+    """Display a summary of GPU vs CPU performance for both training and inference."""
+    print("=" * 60)
+    print("           GPU vs CPU Performance Summary")
+    print("=" * 60)
     
-    results = []
+    # Training results
+    print("\n📊 TRAINING (5 epochs on MNIST - 60,000 images)")
+    print("-" * 60)
     
-    # Check each result file
-    files = [
-        ("/tmp/gpu_7.txt", "GPU", "7.png"),
-        ("/tmp/gpu_8.txt", "GPU", "8.png"),
-        ("/tmp/cpu_7.txt", "CPU", "7.png"),
-    ]
+    gpu_train_time = None
+    cpu_train_time = None
     
-    for filepath, device, image in files:
-        try:
-            with open(filepath, 'r') as f:
-                content = f.read()
-            match = re.search(r'Time\s*:\s*([\d.]+)\s*seconds', content)
-            if match:
-                time_val = float(match.group(1))
-                results.append((device, image, time_val))
-                print(f"{device} with {image}: {time_val:.2f} seconds")
-        except FileNotFoundError:
-            pass
+    try:
+        with open("/tmp/gpu_train.txt", 'r') as f:
+            content = f.read()
+        match = re.search(r'Time\s*:\s*([\d.]+)\s*seconds', content)
+        if match:
+            gpu_train_time = float(match.group(1))
+            print(f"  GPU Training:  {gpu_train_time:>7.1f} seconds")
+    except FileNotFoundError:
+        print("  GPU Training:  (not yet run)")
     
-    # Calculate speedup if we have both GPU and CPU results for 7.png
-    gpu_time = next((r[2] for r in results if r[0] == "GPU" and r[1] == "7.png"), None)
-    cpu_time = next((r[2] for r in results if r[0] == "CPU" and r[1] == "7.png"), None)
+    try:
+        with open("/tmp/cpu_train.txt", 'r') as f:
+            content = f.read()
+        match = re.search(r'Time\s*:\s*([\d.]+)\s*seconds', content)
+        if match:
+            cpu_train_time = float(match.group(1))
+            print(f"  CPU Training:  {cpu_train_time:>7.1f} seconds")
+    except FileNotFoundError:
+        print("  CPU Training:  (not yet run)")
     
-    if gpu_time and cpu_time:
-        print("-" * 50)
-        speedup = cpu_time / gpu_time
-        print(f"GPU is {speedup:.1f}x faster than CPU!")
+    if gpu_train_time and cpu_train_time:
+        speedup = cpu_train_time / gpu_train_time
+        print(f"\n  ⚡ GPU is {speedup:.1f}x FASTER for training!")
     
-    print("=" * 50)
-
+    # Inference results
+    print("\n📊 INFERENCE (single image prediction)")
+    print("-" * 60)
+    
+    gpu_inf_time = None
+    cpu_inf_time = None
+    
+    try:
+        with open("/tmp/gpu_7.txt", 'r') as f:
+            content = f.read()
+        match = re.search(r'Time\s*:\s*([\d.]+)\s*seconds', content)
+        if match:
+            gpu_inf_time = float(match.group(1))
+            print(f"  GPU Inference: {gpu_inf_time:>7.2f} seconds")
+    except FileNotFoundError:
+        print("  GPU Inference: (not yet run)")
+    
+    try:
+        with open("/tmp/cpu_7.txt", 'r') as f:
+            content = f.read()
+        match = re.search(r'Time\s*:\s*([\d.]+)\s*seconds', content)
+        if match:
+            cpu_inf_time = float(match.group(1))
+            print(f"  CPU Inference: {cpu_inf_time:>7.2f} seconds")
+    except FileNotFoundError:
+        print("  CPU Inference: (not yet run)")
+    
+    if gpu_inf_time and cpu_inf_time:
+        if cpu_inf_time < gpu_inf_time:
+            speedup = gpu_inf_time / cpu_inf_time
+            print(f"\n  💡 CPU is {speedup:.1f}x faster for single inference")
+            print("     (GPU overhead dominates for tiny workloads)")
+        else:
+            speedup = cpu_inf_time / gpu_inf_time
+            print(f"\n  ⚡ GPU is {speedup:.1f}x faster for inference")
+    
+    # Summary
+    print("\n" + "=" * 60)
+    print("KEY TAKEAWAY:")
+    print("-" * 60)
+    if gpu_train_time and cpu_train_time:
+        print(f"  • Training: GPU wins big ({cpu_train_time/gpu_train_time:.1f}x faster)")
+        print("    → Large datasets benefit from GPU parallelism")
+    if gpu_inf_time and cpu_inf_time and cpu_inf_time < gpu_inf_time:
+        print(f"  • Inference: CPU faster for single images")
+        print("    → GPU data transfer overhead exceeds compute time")
+    print("=" * 60)
