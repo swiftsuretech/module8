@@ -11,11 +11,10 @@ def summary():
     print("=" * 60)
     
     # Training results
-    print("\n📊 TRAINING (1 epoch on MNIST - 60,000 images)")
-    print("-" * 60)
-    
     gpu_train_time = None
     cpu_train_time = None
+    gpu_epochs = None
+    cpu_epochs = None
     
     try:
         with open("/tmp/gpu_train.txt", 'r') as f:
@@ -23,9 +22,12 @@ def summary():
         match = re.search(r'Time\s*:\s*([\d.]+)\s*seconds', content)
         if match:
             gpu_train_time = float(match.group(1))
-            print(f"  GPU Training:  {gpu_train_time:>7.1f} seconds")
+        # Find highest epoch number
+        epoch_matches = re.findall(r'Train Epoch:\s*(\d+)', content)
+        if epoch_matches:
+            gpu_epochs = max(int(e) for e in epoch_matches)
     except FileNotFoundError:
-        print("  GPU Training:  (not yet run)")
+        pass
     
     try:
         with open("/tmp/cpu_train.txt", 'r') as f:
@@ -33,8 +35,25 @@ def summary():
         match = re.search(r'Time\s*:\s*([\d.]+)\s*seconds', content)
         if match:
             cpu_train_time = float(match.group(1))
-            print(f"  CPU Training:  {cpu_train_time:>7.1f} seconds")
+        epoch_matches = re.findall(r'Train Epoch:\s*(\d+)', content)
+        if epoch_matches:
+            cpu_epochs = max(int(e) for e in epoch_matches)
     except FileNotFoundError:
+        pass
+    
+    # Determine epochs to display
+    epochs = gpu_epochs or cpu_epochs or "?"
+    print(f"\n📊 TRAINING ({epochs} epoch{'s' if epochs != 1 else ''} on MNIST - 60,000 images)")
+    print("-" * 60)
+    
+    if gpu_train_time:
+        print(f"  GPU Training:  {gpu_train_time:>7.1f} seconds")
+    else:
+        print("  GPU Training:  (not yet run)")
+    
+    if cpu_train_time:
+        print(f"  CPU Training:  {cpu_train_time:>7.1f} seconds")
+    else:
         print("  CPU Training:  (not yet run)")
     
     if gpu_train_time and cpu_train_time:
