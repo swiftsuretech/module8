@@ -71,7 +71,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Set the batch size and number of epochs
 batch_size = 64
-epochs = 25
+epochs = 5
 
 # Load the training and validation data
 train_data = datasets.MNIST(root='data', train=True,
