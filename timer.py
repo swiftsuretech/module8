@@ -11,7 +11,7 @@ def summary():
     print("=" * 60)
     
     # Training results
-    print("\n📊 TRAINING (5 epochs on MNIST - 60,000 images)")
+    print("\n📊 TRAINING (1 epoch on MNIST - 60,000 images)")
     print("-" * 60)
     
     gpu_train_time = None

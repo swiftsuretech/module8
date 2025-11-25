@@ -3,6 +3,11 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 import time
+import argparse
+
+parser = argparse.ArgumentParser(description='Train MNIST digit recognition model')
+parser.add_argument('epochs', nargs='?', type=int, default=1, help='Number of training epochs (default: 1)')
+args = parser.parse_args()
 
 # Define a simple convolutional neural network
 class Net(nn.Module):
@@ -71,7 +76,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Set the batch size and number of epochs
 batch_size = 64
-epochs = 5
+epochs = args.epochs
+print(f'Training for {epochs} epochs on {torch.device("cuda" if torch.cuda.is_available() else "cpu")}')
 
 # Load the training and validation data
 train_data = datasets.MNIST(root='data', train=True,
