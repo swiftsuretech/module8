@@ -11,11 +11,6 @@ def generate_notebook():
     nb = nbf.v4.new_notebook()
     cells = []
 
-    # --- Setup Cell ---
-    setup_code = """# Setup for DOCA Simulator
-%run scripts/lab_setup.py"""
-    cells.append(nbf.v4.new_code_cell(setup_code))
-
     # --- Header ---
     logo_md = """<img src="https://www.nvidia.com/content/dam/en-zz/Solutions/about-nvidia/logo-and-brand/01-nvidia-logo-horiz-500x200-2c50-d@2x.png" alt="NVIDIA Logo" style="width: 300px; height: auto;">"""
     cells.append(nbf.v4.new_markdown_cell(logo_md))
@@ -40,6 +35,17 @@ In this practice, you will:
 There are no prerequisites for this lab.
 """
     cells.append(nbf.v4.new_markdown_cell(overview_md))
+    cells.append(nbf.v4.new_markdown_cell(sep_md))
+
+    # --- Setup Task ---
+    setup_md = """### Configure Lab Environment
+Please run the following cell to configure the lab environment for the DPU simulation.
+"""
+    cells.append(nbf.v4.new_markdown_cell(setup_md))
+    
+    setup_code = "%run scripts/lab_setup.py"
+    cells.append(nbf.v4.new_code_cell(setup_code))
+
     cells.append(nbf.v4.new_markdown_cell(sep_md))
 
     # --- Practice 1 ---

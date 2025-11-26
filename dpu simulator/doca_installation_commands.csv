@@ -1,0 +1,90 @@
+#|Command|Output
+1|sudo –i|"[sudo] password for student:
+Sorry, try again.
+[sudo] password for student:
+sudo: –i​: command not found"
+2|cd /home/student/AI_Infra/module5/hands_on_1|
+3|/usr/sbin/ofed_uninstall.sh --force|bash: /usr/sbin/ofed_uninstall.sh: No such file or directory
+4|sudo apt-get autoremove|"Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+0 upgraded, 0 newly installed, 0 to remove and 327 not upgraded."
+5|dpkg -i doca-host_3.1.0-091000-25.07-ubuntu2204_amd64.deb|dpkg: error: requested operation requires superuser privilege
+6|sudo -i|root@acad14:~#
+7|"for f in $( dpkg --list | grep doca | awk '{print $2}' ); do echo $f ; apt remove --purge $f -y ; done"|"doca-host
+(Reading database ... 194224 files and directories currently installed.)
+Removing doca-host (3.1.0-091000-25.07-ubuntu2204) ...
+Purging configuration files for doca-host (3.1.0-091000-25.07-ubuntu2204) ..."
+8|/usr/sbin/ofed_uninstall.sh --force|-bash: /usr/sbin/ofed_uninstall.sh: No such file or directory
+9|cd /home/student/AI_Infra/module5/hands_on_1|
+10|dpkg -i doca-host_3.1.0-091000-25.07-ubuntu2204_amd64.deb|"Selecting previously unselected package doca-host.
+(Reading database ... 194224 files and directories currently installed.)
+Preparing to unpack doca-host_3.1.0-091000-25.07-ubuntu2204_amd64.deb ...
+Unpacking doca-host (3.1.0-091000-25.07-ubuntu2204) ...
+Setting up doca-host (3.1.0-091000-25.07-ubuntu2204) ..."
+11|apt update|"Fetched 21.9 MB in 4s (6,219 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+347 packages can be upgraded. Run 'apt list --upgradable' to see them."
+12|systemctl status rshim|Unit rshim.service could not be found.
+13|apt install -y rshim|"Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  rshim
+0 upgraded, 1 newly installed, 0 to remove and 347 not upgraded.
+Need to get 14.2 kB of archives.
+After this operation, 45.1 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy/main amd64 rshim amd64 2.0.6-0ubuntu1 [14.2 kB]
+Fetched 14.2 kB in 0s (35.6 kB/s)
+Selecting previously unselected package rshim.
+(Reading database ... 194224 files and directories currently installed.)
+Preparing to unpack .../rshim_2.0.6-0ubuntu1_amd64.deb ...
+Unpacking rshim (2.0.6-0ubuntu1) ...
+Setting up rshim (2.0.6-0ubuntu1) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/rshim.service → /lib/systemd/system/rshim.service."
+14|sudo systemctl start rshim|
+15|apt install -y doca-all mlnx-fw-updater|"21 upgraded, 160 newly installed, 7 to remove and 325 not upgraded.
+Need to get 14.0 MB/416 MB of archives.
+After this operation, 1,315 MB of additional disk space will be used.
+
+Device #1:
+----------
+  Device Type:      ConnectX7
+  Part Number:      MCX755106AC-HEA_Ax
+  FW:               28.46.1006
+  Status:           Up to date
+
+DKMS builds: xpmem, kernel-mft, knem, mlnx-ofed-kernel, srp, iser, isert
+
+Setting up doca-all (3.1.0-091000) ..."
+16|exit|logout
+17|sudo minicom -D /dev/rshim0/console|minicom: cannot open /dev/rshim0/console: No such file or directory
+18|sudo systemctl start rshim|
+19|sudo minicom -D /dev/rshim0/console|minicom: cannot open /dev/rshim0/console: No such file or directory
+20|sudo systemctl status rshim|"● rshim.service - rshim driver for BlueField SoC
+     Active: active (running) since Sun 2025-11-23 07:28:43 PST
+   Main PID: 8968 (rshim)
+rshim[8968]: Probing pcie-0000:a0:00.2(uio)
+rshim[8968]: Create rshim pcie-0000:a0:00.2
+rshim[8968]: another backend already attached
+rshim[8968]: rshim0 entering drop mode"
+21|sudo systemctl stop rshim|
+22|sudo systemctl start rshim|
+23|sudo minicom -D /dev/rshim0/console|"Welcome to minicom 2.8
+
+Port /dev/rshim0/console, 07:33:52
+
+Press CTRL-A Z for help on special keys
+
+acad14-DPU login:"
+24|ubuntu|Password:
+27|sudo -i|"sudo: unable to resolve host acad14-DPU: Temporary failure in name resolution
+root@acad14-DPU:~#"
+28|sudo bfver|"--/dev/mmcblk0boot0
+BlueField ATF version: v2.2(release):4.9.0-25-g0ce57e322
+BlueField UEFI version: 4.9.0-46-g7e3911bd4d
+BlueField BSP version: 4.9.0.13378
+
+OS Release Version: bf-bundle-2.9.0-90_24.10_ubuntu-22.04_prod"

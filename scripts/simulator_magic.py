@@ -17,14 +17,14 @@ class DocaSimulator(Magics):
         # Load the data
         current_dir = os.path.dirname(os.path.abspath(__file__))
         root_dir = os.path.dirname(current_dir)
-        excel_path = os.path.join(root_dir, 'dpu simulator', 'doca_installation_commands.xlsx')
+        excel_path = os.path.join(root_dir, 'dpu simulator', 'doca_installation_commands.csv')
         try:
-            self.df = pd.read_excel(excel_path)
+            self.df = pd.read_csv(excel_path, sep='|')
             # Normalize commands for comparison (strip whitespace)
             if 'Command' in self.df.columns:
                 self.df['Command_Clean'] = self.df['Command'].astype(str).str.strip()
         except Exception as e:
-            print(f"Error loading excel file: {e}")
+            print(f"Error loading csv file: {e}")
             self.df = pd.DataFrame()
 
     @cell_magic
