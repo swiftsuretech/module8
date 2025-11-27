@@ -10,7 +10,7 @@ Building dependency tree... Done
 Reading state information... Done
 0 upgraded, 0 newly installed, 0 to remove and 327 not upgraded."
 5|dpkg -i doca-host_3.1.0-091000-25.07-ubuntu2204_amd64.deb|dpkg: error: requested operation requires superuser privilege
-6|sudo -i|root@acad14:~#
+6|sudo -i|root@server:~#
 7|"for f in $( dpkg --list | grep doca | awk '{print $2}' ); do echo $f ; apt remove --purge $f -y ; done"|"doca-host
 (Reading database ... 194224 files and directories currently installed.)
 Removing doca-host (3.1.0-091000-25.07-ubuntu2204) ...
@@ -78,10 +78,10 @@ Port /dev/rshim0/console, 07:33:52
 
 Press CTRL-A Z for help on special keys
 
-acad14-DPU login:"
+server-DPU login:"
 24|ubuntu|Password:
-27|sudo -i|"sudo: unable to resolve host acad14-DPU: Temporary failure in name resolution
-root@acad14-DPU:~#"
+27|sudo -i|"sudo: unable to resolve host server-DPU: Temporary failure in name resolution
+root@server-DPU:~#"
 28|sudo bfver|"--/dev/mmcblk0boot0
 BlueField ATF version: v2.2(release):4.9.0-25-g0ce57e322
 BlueField UEFI version: 4.9.0-46-g7e3911bd4d

@@ -40,6 +40,7 @@ def init():
         ip.run_line_magic('reload_ext', 'simulator_magic')
         
         # Success - explicit silence requested by user
+        print("Lab is ready")
         
     except Exception:
         # Fail silently or minimal error if critical
