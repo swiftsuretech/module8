@@ -19,7 +19,7 @@ class DocaSimulator(Magics):
         root_dir = os.path.dirname(current_dir)
         excel_path = os.path.join(root_dir, 'dpu simulator', 'doca_installation_commands.csv')
         try:
-            self.df = pd.read_csv(excel_path, sep='|')
+            self.df = pd.read_csv(excel_path)
             # Normalize commands for comparison (strip whitespace)
             if 'Command' in self.df.columns:
                 self.df['Command_Clean'] = self.df['Command'].astype(str).str.strip()
