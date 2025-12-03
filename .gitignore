@@ -21,3 +21,4 @@ __pycache__/
 materials/data/
 *.pt
 docker_example/
+local/
