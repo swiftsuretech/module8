@@ -1,0 +1,133 @@
+[
+    {
+        "question": "Which command is used in the lab to list all PCI devices and filter to show only NVIDIA hardware?",
+        "type": "multiple_choice",
+        "answers": [
+            {
+                "answer": "nvidia-smi",
+                "correct": false,
+                "feedback": "nvidia-smi shows GPU status but lspci is used for PCI devices."
+            },
+            {
+                "answer": "lspci -Q | grep NVIDIA",
+                "correct": true,
+                "feedback": "Correct! lspci lists PCI devices and grep filters for NVIDIA."
+            },
+            {
+                "answer": "lsusb | grep NVIDIA",
+                "correct": false,
+                "feedback": "lsusb lists USB devices."
+            },
+            {
+                "answer": "dmesg | grep NVIDIA",
+                "correct": false,
+                "feedback": "dmesg shows kernel ring buffer messages."
+            }
+        ]
+    },
+    {
+        "question": "Which file is cat-ed to display the Linux distribution name and version?",
+        "type": "multiple_choice",
+        "answers": [
+            {
+                "answer": "/etc/issue",
+                "correct": false,
+                "feedback": "This contains system identification but /etc/os-release was used in the lab."
+            },
+            {
+                "answer": "/proc/version",
+                "correct": false,
+                "feedback": "This shows kernel version info."
+            },
+            {
+                "answer": "/etc/os-release",
+                "correct": true,
+                "feedback": "Correct! /etc/os-release contains OS identification data."
+            },
+            {
+                "answer": "uname -a",
+                "correct": false,
+                "feedback": "uname -a shows kernel info."
+            }
+        ]
+    },
+    {
+        "question": "What package is installed to add the NVIDIA apt repository configuration?",
+        "type": "multiple_choice",
+        "answers": [
+            {
+                "answer": "nvidia-driver-570",
+                "correct": false,
+                "feedback": "This is the driver itself, not the repository configuration."
+            },
+            {
+                "answer": "cuda-toolkit",
+                "correct": false,
+                "feedback": "This is the toolkit, not the repo keyring."
+            },
+            {
+                "answer": "cuda-keyring",
+                "correct": true,
+                "feedback": "Correct! The cuda-keyring package configures the repository."
+            },
+            {
+                "answer": "nvidia-docker2",
+                "correct": false,
+                "feedback": "This is for container support."
+            }
+        ]
+    },
+    {
+        "question": "Which command specifically displays GPU memory usage in CSV format?",
+        "type": "multiple_choice",
+        "answers": [
+            {
+                "answer": "nvidia-smi --memory",
+                "correct": false,
+                "feedback": "Invalid flag."
+            },
+            {
+                "answer": "nvidia-smi --query-gpu=memory.used --format=csv",
+                "correct": true,
+                "feedback": "Correct! This queries memory usage and formats as CSV."
+            },
+            {
+                "answer": "nvidia-smi -q -d MEMORY",
+                "correct": false,
+                "feedback": "This shows detailed memory info but not in CSV format specified."
+            },
+            {
+                "answer": "top",
+                "correct": false,
+                "feedback": "top shows system process info."
+            }
+        ]
+    },
+    {
+        "question": "What command is primarily used to verify the driver is installed and working properly?",
+        "type": "multiple_choice",
+        "answers": [
+            {
+                "answer": "lspci",
+                "correct": false,
+                "feedback": "lspci shows hardware presence, not driver status."
+            },
+            {
+                "answer": "lsmod",
+                "correct": false,
+                "feedback": "lsmod shows loaded modules but isn't the primary status tool."
+            },
+            {
+                "answer": "nvidia-smi",
+                "correct": true,
+                "feedback": "Correct! nvidia-smi communicates with the driver to show status."
+            },
+            {
+                "answer": "nvcc --version",
+                "correct": false,
+                "feedback": "nvcc checks the CUDA compiler version."
+            }
+        ]
+    }
+]
+
