@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVIDIA AI Infrastructure - Lab Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .header {
+            background: #1a1a1a;
+            padding: 0;
+        }
+        
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            height: 100%;
+        }
+        
+        .nvidia-logo {
+            height: 32px;
+            width: auto;
+        }
+        
+        @media print {
+            .header {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                background: #1a1a1a !important;
+            }
+        }
+        
+        .header-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .header-date {
+            color: #888;
+            font-size: 14px;
+            font-weight: 300;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .instructions {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .password-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .password-box {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            user-select: all;
+        }
+        
+        .copy-btn {
+            background: #76b900;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background: #5a8f00;
+        }
+        
+        .copy-btn:active {
+            background: #4a7500;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th {
+            text-align: left;
+            padding: 12px 15px;
+            color: #888;
+            font-weight: 500;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .status-ready {
+            color: #76b900;
+        }
+        
+        .status-building {
+            color: #f0a000;
+        }
+        
+        .status-error {
+            color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-inner">
+            <div class="header-left">
+                <img src="data:image/png;base64,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" alt="NVIDIA" class="nvidia-logo">
+                <span class="header-title">AI Infrastructure</span>
+            </div>
+            <span class="header-date">January 2026</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <h2>Access Information</h2>
+            <p class="instructions">
+                Click on the lab links below to launch your assigned environment. You will be required to provide a password to access the Jupyter notebook. Please copy and paste the password provided below:
+            </p>
+            
+            <div class="password-section">
+                <div class="password-box" id="password">Ac15T4BOoEs3@gg0Eo1Lz9</div>
+                <button class="copy-btn" onclick="copyPassword()">Copy Password</button>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email Address</th>
+                        <th>Lab Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fahd Alsubari</td>
+                        <td>falsubari@lenovo.com</td>
+                        <td><a href="http://34.26.144.180:8888" target="_blank" class="status-ready">http://34.26.144.180:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>Hugo Choe</td>
+                        <td>hchoe@lenovo.com</td>
+                        <td><a href="http://35.184.76.107:8888" target="_blank" class="status-ready">http://35.184.76.107:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>Nandhavignesh Ramalingam</td>
+                        <td>nramalingam@lenovo.com</td>
+                        <td><a href="http://34.48.123.69:8888" target="_blank" class="status-ready">http://34.48.123.69:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>Naresh Kanthasammy</td>
+                        <td>nkanthasammy@lenovo.com</td>
+                        <td><a href="http://35.231.164.117:8888" target="_blank" class="status-ready">http://35.231.164.117:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>Nawar Nawar</td>
+                        <td>nnawar@nvidia.com</td>
+                        <td><a href="http://34.186.78.80:8888" target="_blank" class="status-ready">http://34.186.78.80:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>Noriyuki Kito</td>
+                        <td>nkito@lenovo.com</td>
+                        <td><a href="http://136.107.17.195:8888" target="_blank" class="status-ready">http://136.107.17.195:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>Sandeep Kumar</td>
+                        <td>skumar52@lenovo.com</td>
+                        <td><a href="http://35.237.232.8:8888" target="_blank" class="status-ready">http://35.237.232.8:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>Sharizuan Feisal Lamin</td>
+                        <td>slamin@lenovo.com</td>
+                        <td><a href="http://34.145.146.185:8888" target="_blank" class="status-ready">http://34.145.146.185:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>Sonia Hong</td>
+                        <td>shong6@lenovo.com</td>
+                        <td><a href="http://34.48.251.183:8888" target="_blank" class="status-ready">http://34.48.251.183:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>Sunil Kumar</td>
+                        <td>sm61@lenovo.com</td>
+                        <td><a href="http://35.243.132.11:8888" target="_blank" class="status-ready">http://35.243.132.11:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>Usha Muthusamy</td>
+                        <td>umuthusamy@lenovo.com</td>
+                        <td><a href="http://136.107.42.47:8888" target="_blank" class="status-ready">http://136.107.42.47:8888</a></td>
+                    </tr>
+                    <tr>
+                        <td>William Ng</td>
+                        <td>wng8@lenovo.com</td>
+                        <td><a href="http://34.48.117.163:8888" target="_blank" class="status-ready">http://34.48.117.163:8888</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        function copyPassword() {
+            const password = document.getElementById('password').textContent;
+            navigator.clipboard.writeText(password).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.background = '#5a8f00';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#76b900';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
